@@ -12,7 +12,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
   const email = document.getElementById('signup-email').value;
   const password = document.getElementById('signup-password').value;
 
-  const { user, error } = await supabase.auth.signUp({
+  const { user, error } = await supabaseClient.auth.signUp({
     email,
     password,
   });
@@ -30,7 +30,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
     email,
     password,
   });
@@ -39,7 +39,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     alert(error.message);
   } else {
     alert('Login successful!');
-    console.log(data.session); // contains access token
+    window.location.href = "main.html";
   }
 });
 
@@ -54,7 +54,7 @@ supabaseClient.auth.getSession().then(({ data: { session } }) => {
 
 //LOGOUT FUNCTION
 async function logout() {
-  const { error } = await supabase.auth.signOut();
+  const { error } = await supabaseClient.auth.signOut();
   if (error) {
     alert('Error logging out:', error.message);
   } else {
